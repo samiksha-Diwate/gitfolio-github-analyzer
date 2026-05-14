@@ -1,2 +1,2 @@
-﻿# WebClient Configurations
-Connection timeout set to 5 seconds. Read timeout set to 5 seconds to gracefully handle slow API responses.
+﻿# WebClient Error Filters
+Intercepts status codes 403 (Rate Limit) and 404 (Not Found) to bubble exceptions.
