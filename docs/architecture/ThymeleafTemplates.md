@@ -1,2 +1,2 @@
-﻿# Dynamic Fragment Loaders
-Utilizes Thymeleaf dynamic inclusions to swap modals when editing search preferences.
+﻿# Thymeleaf Fragment Imports
+Splits sidebar layout and dashboard analytics panels into decoupled html templates.
