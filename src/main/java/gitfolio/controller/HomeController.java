@@ -1,6 +1,8 @@
 package gitfolio.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,31 +28,82 @@ public class HomeController {
         return "index";
     }
 
-   @PostMapping("/search")
-public String search(@RequestParam String username,
-                     Model model) {
+    @PostMapping("/search")
+    public String search(@RequestParam String username,
+                         Model model) {
 
-    try {
+        try {
 
-        GitHubUser user =
-                gitHubService.getUser(username);
+            GitHubUser user =
+                    gitHubService.getUser(username);
 
-        List<Repository> repositories =
-                gitHubService.getRepositories(username);
+            List<Repository> repositories =
+                    gitHubService.getRepositories(username);
 
-        model.addAttribute("user", user);
+            int totalStars = 0;
+            int totalForks = 0;
 
-        model.addAttribute("repositories",
-                repositories);
+            Map<String, Integer> languageCount =
+                    new HashMap<>();
 
+            for (Repository repo : repositories) {
+
+                totalStars += repo.getStargazers_count();
+
+                totalForks += repo.getForks_count();
+
+                String language = repo.getLanguage();
+
+                if (language != null) {
+
+                    languageCount.put(
+                            language,
+
+                            languageCount.getOrDefault(
+                                    language, 0) + 1
+                    );
+                }
+            }
+
+            String topLanguage = "Not Available";
+
+            int max = 0;
+
+            for (String lang : languageCount.keySet()) {
+
+                if (languageCount.get(lang) > max) {
+
+                    max = languageCount.get(lang);
+
+                    topLanguage = lang;
+                }
+            }
+
+            model.addAttribute("user", user);
+
+            model.addAttribute("repositories",
+                    repositories);
+
+            model.addAttribute("totalStars",
+                    totalStars);
+
+            model.addAttribute("totalForks",
+                    totalForks);
+
+            model.addAttribute("topLanguage",
+                    topLanguage);
+
+            model.addAttribute("repoCount",
+                    repositories.size());
+
+        }
+
+        catch (Exception e) {
+
+            model.addAttribute("error",
+                    "GitHub user not found!");
+        }
+
+        return "index";
     }
-
-    catch (Exception e) {
-
-        model.addAttribute("error",
-                "GitHub user not found!");
-    }
-
-    return "index";
-}
 }

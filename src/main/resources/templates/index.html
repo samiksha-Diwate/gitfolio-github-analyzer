@@ -39,7 +39,33 @@
     <p th:text="${error}"></p>
 
 </div>
+<div th:if="${repoCount}"
+     class="card"
+     style="margin-bottom:30px;">
 
+    <h2>GitHub Statistics Dashboard 📊</h2>
+
+    <p>
+        Total Repositories:
+        <span th:text="${repoCount}"></span>
+    </p>
+
+    <p>
+        Total Stars:
+        <span th:text="${totalStars}"></span>
+    </p>
+
+    <p>
+        Total Forks:
+        <span th:text="${totalForks}"></span>
+    </p>
+
+    <p>
+        Most Used Language:
+        <span th:text="${topLanguage}"></span>
+    </p>
+
+</div>
     <div th:if="${user}" class="card">
 
         <img th:src="${user.avatar_url}">
