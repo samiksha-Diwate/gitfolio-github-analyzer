@@ -15,7 +15,9 @@
 
     <h1>GitFolio 🚀</h1>
 
-    <form action="/search" method="post">
+    <form action="/search"
+      method="post"
+      onsubmit="showLoader()">
 
         <div class="search-box">
 
@@ -28,6 +30,15 @@
         </div>
 
     </form>
+
+    <div th:if="${error}"
+     style="color:#ef4444;
+     margin-top:15px;
+     font-size:18px;">
+
+    <p th:text="${error}"></p>
+
+</div>
 
     <div th:if="${user}" class="card">
 
@@ -90,6 +101,25 @@
     </div>
 
 </div>
+
+<div id="loader"
+     style="display:none;
+     margin-top:20px;
+     text-align:center;">
+
+    <h2>Loading GitHub Data...</h2>
+
+</div>
+
+<script>
+
+    function showLoader(){
+
+        document.getElementById("loader")
+        .style.display = "block";
+    }
+
+</script>
 
 </body>
 </html>

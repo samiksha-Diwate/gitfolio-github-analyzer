@@ -26,9 +26,11 @@ public class HomeController {
         return "index";
     }
 
-    @PostMapping("/search")
-    public String search(@RequestParam String username,
-                         Model model) {
+   @PostMapping("/search")
+public String search(@RequestParam String username,
+                     Model model) {
+
+    try {
 
         GitHubUser user =
                 gitHubService.getUser(username);
@@ -41,6 +43,14 @@ public class HomeController {
         model.addAttribute("repositories",
                 repositories);
 
-        return "index";
     }
+
+    catch (Exception e) {
+
+        model.addAttribute("error",
+                "GitHub user not found!");
+    }
+
+    return "index";
+}
 }
