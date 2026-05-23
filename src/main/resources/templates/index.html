@@ -5,43 +5,108 @@
 
     <title>GitFolio</title>
 
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body{
+
+            background-color:#0f172a;
+            color:white;
+            font-family:Arial;
+            padding:40px;
+        }
+
+        h1{
+
+            color:#22c55e;
+        }
+
+        form{
+
+            margin-top:20px;
+        }
+
+        input{
+
+            padding:12px;
+            width:300px;
+            border:none;
+            border-radius:10px;
+            font-size:16px;
+        }
+
+        button{
+
+            padding:12px 20px;
+            background:#22c55e;
+            border:none;
+            border-radius:10px;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        .card{
+
+            background:#1e293b;
+            padding:25px;
+            border-radius:15px;
+            margin-top:30px;
+        }
+
+        img{
+
+            border-radius:50%;
+            width:120px;
+        }
+
+        a{
+
+            text-decoration:none;
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-<div class="container">
+<h1>GitFolio - GitHub Portfolio Analyzer 🚀</h1>
 
-    <h1>GitFolio 🚀</h1>
-
-    <form action="/search"
+<form action="/search"
       method="post"
       onsubmit="showLoader()">
 
-        <div class="search-box">
+    <input type="text"
+           name="username"
+           placeholder="Enter GitHub Username"
+           required>
 
-            <input type="text"
-                   name="username"
-                   placeholder="Enter GitHub Username">
+    <button type="submit">
+        Search
+    </button>
 
-            <button type="submit">Search</button>
+</form>
 
-        </div>
-
-    </form>
-
-    <div th:if="${error}"
-     style="color:#ef4444;
-     margin-top:15px;
-     font-size:18px;">
+<div th:if="${error}"
+     style="color:red;
+     margin-top:20px;">
 
     <p th:text="${error}"></p>
 
 </div>
+
+<div id="loader"
+     style="display:none;
+     margin-top:20px;">
+
+    <h2>Loading GitHub Data...</h2>
+
+</div>
+
 <div th:if="${repoCount}"
-     class="card"
-     style="margin-bottom:30px;">
+     class="card">
 
     <h2>GitHub Statistics Dashboard 📊</h2>
 
@@ -64,9 +129,11 @@
         Most Used Language:
         <span th:text="${topLanguage}"></span>
     </p>
+
+</div>
+
 <div th:if="${topRepo}"
-     class="card"
-     style="margin-bottom:30px;">
+     class="card">
 
     <h2>Featured Repository ⭐</h2>
 
@@ -92,36 +159,39 @@
 
 </div>
 
+<div th:if="${user}"
+     class="card">
+
+    <img th:src="${user.avatar_url}">
+
+    <h2 th:text="${user.name}"></h2>
+
+    <p th:text="${user.bio}"></p>
+
+    <p>
+        Followers:
+        <span th:text="${user.followers}"></span>
+    </p>
+
+    <p>
+        Following:
+        <span th:text="${user.following}"></span>
+    </p>
+
+    <p>
+        Public Repositories:
+        <span th:text="${user.public_repos}"></span>
+    </p>
+
 </div>
-    <div th:if="${user}" class="card">
 
-        <img th:src="${user.avatar_url}">
+<div th:if="${repositories}"
+     style="margin-top:30px;">
 
-        <h2 th:text="${user.name}"></h2>
-
-        <p th:text="${user.bio}"></p>
-
-        <div class="stats">
-
-            <div class="stat-box">
-                <h3 th:text="${user.followers}"></h3>
-                <p>Followers</p>
-            </div>
-
-            <div class="stat-box">
-                <h3 th:text="${user.following}"></h3>
-                <p>Following</p>
-            </div>
-            
-            <div th:if="${repositories}" style="margin-top:30px;">
-
-    <h2 style="margin-bottom:20px;">
-        Repositories 🚀
-    </h2>
+    <h2>Repositories 🚀</h2>
 
     <div th:each="repo : ${repositories}"
-         class="card"
-         style="margin-bottom:20px;">
+         class="card">
 
         <h2 th:text="${repo.name}"></h2>
 
@@ -143,28 +213,27 @@
         <a th:href="${repo.html_url}"
            target="_blank"
            style="color:#22c55e;">
+
             View Repository
+
         </a>
 
     </div>
 
 </div>
-        </div>
 
-    </div>
+<div th:if="${repoCount}"
+     class="card">
 
-</div>
+    <h2>GitHub Analytics Chart 📈</h2>
 
-<div id="loader"
-     style="display:none;
-     margin-top:20px;
-     text-align:center;">
+    <canvas id="repoChart">
 
-    <h2>Loading GitHub Data...</h2>
+    </canvas>
 
 </div>
 
-<script>
+<script th:inline="javascript">
 
     function showLoader(){
 
@@ -172,7 +241,63 @@
         .style.display = "block";
     }
 
+    let repoCount =
+        [[${repoCount}]];
+
+    let totalStars =
+        [[${totalStars}]];
+
+    let totalForks =
+        [[${totalForks}]];
+
+    if(repoCount){
+
+        const ctx =
+            document.getElementById('repoChart');
+
+        new Chart(ctx, {
+
+            type:'bar',
+
+            data:{
+
+                labels:[
+                    'Repositories',
+                    'Stars',
+                    'Forks'
+                ],
+
+                datasets:[{
+
+                    label:'GitHub Statistics',
+
+                    data:[
+                        repoCount,
+                        totalStars,
+                        totalForks
+                    ],
+
+                    borderWidth:1
+                }]
+            },
+
+            options:{
+
+                responsive:true,
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true
+                    }
+                }
+            }
+        });
+    }
+
 </script>
 
 </body>
+
 </html>
