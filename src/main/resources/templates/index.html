@@ -64,6 +64,33 @@
         Most Used Language:
         <span th:text="${topLanguage}"></span>
     </p>
+<div th:if="${topRepo}"
+     class="card"
+     style="margin-bottom:30px;">
+
+    <h2>Featured Repository ⭐</h2>
+
+    <h3 th:text="${topRepo.name}"></h3>
+
+    <p>
+        Language:
+        <span th:text="${topRepo.language}"></span>
+    </p>
+
+    <p>
+        Stars:
+        <span th:text="${topRepo.stargazers_count}"></span>
+    </p>
+
+    <a th:href="${topRepo.html_url}"
+       target="_blank"
+       style="color:#22c55e;">
+
+        Open Repository
+
+    </a>
+
+</div>
 
 </div>
     <div th:if="${user}" class="card">

@@ -43,6 +43,10 @@ public class HomeController {
             int totalStars = 0;
             int totalForks = 0;
 
+            Repository topRepo = null;
+
+            int highestStars = -1;
+
             Map<String, Integer> languageCount =
                     new HashMap<>();
 
@@ -51,6 +55,15 @@ public class HomeController {
                 totalStars += repo.getStargazers_count();
 
                 totalForks += repo.getForks_count();
+
+                if (repo.getStargazers_count()
+                        > highestStars) {
+
+                    highestStars =
+                            repo.getStargazers_count();
+
+                    topRepo = repo;
+                }
 
                 String language = repo.getLanguage();
 
@@ -95,6 +108,9 @@ public class HomeController {
 
             model.addAttribute("repoCount",
                     repositories.size());
+
+            model.addAttribute("topRepo",
+                    topRepo);
 
         }
 
