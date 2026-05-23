@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>GitFolio</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>GitFolio 🚀</h1>
+
+    <form action="/search" method="post">
+
+        <div class="search-box">
+
+            <input type="text"
+                   name="username"
+                   placeholder="Enter GitHub Username">
+
+            <button type="submit">Search</button>
+
+        </div>
+
+    </form>
+
+    <div th:if="${user}" class="card">
+
+        <img th:src="${user.avatar_url}">
+
+        <h2 th:text="${user.name}"></h2>
+
+        <p th:text="${user.bio}"></p>
+
+        <div class="stats">
+
+            <div class="stat-box">
+                <h3 th:text="${user.followers}"></h3>
+                <p>Followers</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 th:text="${user.following}"></h3>
+                <p>Following</p>
+            </div>
+            
+            <div th:if="${repositories}" style="margin-top:30px;">
+
+    <h2 style="margin-bottom:20px;">
+        Repositories 🚀
+    </h2>
+
+    <div th:each="repo : ${repositories}"
+         class="card"
+         style="margin-bottom:20px;">
+
+        <h2 th:text="${repo.name}"></h2>
+
+        <p>
+            Language:
+            <span th:text="${repo.language}"></span>
+        </p>
+
+        <p>
+            ⭐ Stars:
+            <span th:text="${repo.stargazers_count}"></span>
+        </p>
+
+        <p>
+            🍴 Forks:
+            <span th:text="${repo.forks_count}"></span>
+        </p>
+
+        <a th:href="${repo.html_url}"
+           target="_blank"
+           style="color:#22c55e;">
+            View Repository
+        </a>
+
+    </div>
+
+</div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
