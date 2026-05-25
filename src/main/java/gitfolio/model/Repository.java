@@ -6,6 +6,7 @@ public class Repository {
     private String html_url;
     private String language;
     private int stargazers_count;
+    private int forks_count;
 
     public Repository() {
     }
@@ -40,5 +41,13 @@ public class Repository {
 
     public void setStargazers_count(int stargazers_count) {
         this.stargazers_count = stargazers_count;
+    }
+
+    public int getForks_count() {
+        return forks_count;
+    }
+
+    public void setForks_count(int forks_count) {
+        this.forks_count = forks_count;
     }
 }

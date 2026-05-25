@@ -3,6 +3,7 @@ package gitfolio.model;
 public class GitHubUser {
 
     private String login;
+    private String name;
     private String avatar_url;
     private String bio;
     private String location;
@@ -20,6 +21,14 @@ public class GitHubUser {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAvatar_url() {
