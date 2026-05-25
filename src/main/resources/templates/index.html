@@ -9,61 +9,149 @@
 
     <style>
 
+        *{
+
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
         body{
 
-            background-color:#0f172a;
+            background:#0f172a;
             color:white;
-            font-family:Arial;
-            padding:40px;
+            font-family:Arial, sans-serif;
+            padding:30px;
+        }
+
+        nav{
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            background:#111827;
+
+            padding:20px;
+
+            border-radius:15px;
+
+            margin-bottom:40px;
+        }
+
+        nav h2{
+
+            color:#22c55e;
+        }
+
+        nav a{
+
+            color:white;
+            text-decoration:none;
+            margin-left:20px;
+            font-weight:bold;
+        }
+
+        nav a:hover{
+
+            color:#22c55e;
         }
 
         h1{
 
             color:#22c55e;
+            margin-bottom:20px;
         }
 
         form{
 
             margin-top:20px;
+            margin-bottom:30px;
         }
 
         input{
 
             padding:12px;
             width:300px;
+
             border:none;
+
             border-radius:10px;
+
             font-size:16px;
         }
 
         button{
 
             padding:12px 20px;
+
             background:#22c55e;
+
             border:none;
+
             border-radius:10px;
+
             color:white;
+
             font-size:16px;
+
             cursor:pointer;
+        }
+
+        button:hover{
+
+            background:#16a34a;
         }
 
         .card{
 
             background:#1e293b;
+
             padding:25px;
-            border-radius:15px;
+
+            border-radius:20px;
+
             margin-top:30px;
+
+            box-shadow:0 0 15px rgba(0,0,0,0.3);
+
+            transition:0.3s;
+        }
+
+        .card:hover{
+
+            transform:translateY(-5px);
         }
 
         img{
 
             border-radius:50%;
             width:120px;
+            margin-bottom:20px;
         }
 
         a{
 
             text-decoration:none;
+        }
+
+        .repo-grid{
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(300px,1fr));
+
+            gap:20px;
+        }
+
+        footer{
+
+            margin-top:60px;
+
+            text-align:center;
+
+            color:gray;
         }
 
     </style>
@@ -72,7 +160,26 @@
 
 <body>
 
-<h1>GitFolio - GitHub Portfolio Analyzer 🚀</h1>
+<nav>
+
+    <h2>GitFolio 🚀</h2>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="https://github.com"
+           target="_blank">
+
+           GitHub
+
+        </a>
+
+    </div>
+
+</nav>
+
+<h1>GitHub Portfolio Analyzer</h1>
 
 <form action="/search"
       method="post"
@@ -84,49 +191,58 @@
            required>
 
     <button type="submit">
+
         Search
+
     </button>
 
 </form>
 
-<div th:if="${error}"
-     style="color:red;
-     margin-top:20px;">
+<div id="loader"
+     style="display:none;">
 
-    <p th:text="${error}"></p>
+    <h2>Loading GitHub Data...</h2>
 
 </div>
 
-<div id="loader"
-     style="display:none;
-     margin-top:20px;">
+<div th:if="${error}"
+     class="card">
 
-    <h2>Loading GitHub Data...</h2>
+    <p th:text="${error}"
+       style="color:red;"></p>
 
 </div>
 
 <div th:if="${repoCount}"
      class="card">
 
-    <h2>GitHub Statistics Dashboard 📊</h2>
+    <h2>GitHub Analytics Dashboard 📊</h2>
+
+    <br>
 
     <p>
         Total Repositories:
         <span th:text="${repoCount}"></span>
     </p>
 
+    <br>
+
     <p>
         Total Stars:
         <span th:text="${totalStars}"></span>
     </p>
+
+    <br>
 
     <p>
         Total Forks:
         <span th:text="${totalForks}"></span>
     </p>
 
+    <br>
+
     <p>
-        Most Used Language:
+        Top Language:
         <span th:text="${topLanguage}"></span>
     </p>
 
@@ -137,23 +253,31 @@
 
     <h2>Featured Repository ⭐</h2>
 
+    <br>
+
     <h3 th:text="${topRepo.name}"></h3>
+
+    <br>
 
     <p>
         Language:
         <span th:text="${topRepo.language}"></span>
     </p>
 
+    <br>
+
     <p>
         Stars:
         <span th:text="${topRepo.stargazers_count}"></span>
     </p>
 
+    <br>
+
     <a th:href="${topRepo.html_url}"
        target="_blank"
        style="color:#22c55e;">
 
-        Open Repository
+       Open Repository
 
     </a>
 
@@ -166,17 +290,25 @@
 
     <h2 th:text="${user.name}"></h2>
 
+    <br>
+
     <p th:text="${user.bio}"></p>
+
+    <br>
 
     <p>
         Followers:
         <span th:text="${user.followers}"></span>
     </p>
 
+    <br>
+
     <p>
         Following:
         <span th:text="${user.following}"></span>
     </p>
+
+    <br>
 
     <p>
         Public Repositories:
@@ -190,33 +322,47 @@
 
     <h2>Repositories 🚀</h2>
 
-    <div th:each="repo : ${repositories}"
-         class="card">
+    <br>
 
-        <h2 th:text="${repo.name}"></h2>
+    <div class="repo-grid">
 
-        <p>
-            Language:
-            <span th:text="${repo.language}"></span>
-        </p>
+        <div th:each="repo : ${repositories}"
+             class="card">
 
-        <p>
-            ⭐ Stars:
-            <span th:text="${repo.stargazers_count}"></span>
-        </p>
+            <h2 th:text="${repo.name}"></h2>
 
-        <p>
-            🍴 Forks:
-            <span th:text="${repo.forks_count}"></span>
-        </p>
+            <br>
 
-        <a th:href="${repo.html_url}"
-           target="_blank"
-           style="color:#22c55e;">
+            <p>
+                Language:
+                <span th:text="${repo.language}"></span>
+            </p>
 
-            View Repository
+            <br>
 
-        </a>
+            <p>
+                ⭐ Stars:
+                <span th:text="${repo.stargazers_count}"></span>
+            </p>
+
+            <br>
+
+            <p>
+                🍴 Forks:
+                <span th:text="${repo.forks_count}"></span>
+            </p>
+
+            <br>
+
+            <a th:href="${repo.html_url}"
+               target="_blank"
+               style="color:#22c55e;">
+
+               View Repository
+
+            </a>
+
+        </div>
 
     </div>
 
@@ -225,13 +371,21 @@
 <div th:if="${repoCount}"
      class="card">
 
-    <h2>GitHub Analytics Chart 📈</h2>
+    <h2>GitHub Statistics Chart 📈</h2>
 
-    <canvas id="repoChart">
+    <br>
 
-    </canvas>
+    <canvas id="repoChart"></canvas>
 
 </div>
+
+<footer>
+
+    <h3>
+        Built with ❤️ using Spring Boot
+    </h3>
+
+</footer>
 
 <script th:inline="javascript">
 
