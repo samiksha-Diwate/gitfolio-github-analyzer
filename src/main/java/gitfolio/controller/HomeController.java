@@ -20,11 +20,13 @@ public class HomeController {
     private final GitHubService gitHubService;
 
     public HomeController(GitHubService gitHubService) {
+
         this.gitHubService = gitHubService;
     }
 
     @GetMapping("/")
     public String home() {
+
         return "index";
     }
 
@@ -41,50 +43,50 @@ public class HomeController {
                     gitHubService.getRepositories(username);
 
             int totalStars = 0;
+
             int totalForks = 0;
 
             Repository topRepo = null;
 
-            int highestStars = -1;
-
-            Map<String, Integer> languageCount =
+            Map<String,Integer> languageCount =
                     new HashMap<>();
 
-            for (Repository repo : repositories) {
+            for(Repository repo : repositories){
 
-                totalStars += repo.getStargazers_count();
+                totalStars +=
+                        repo.getStargazers_count();
 
-                totalForks += repo.getForks_count();
+                totalForks +=
+                        repo.getForks_count();
 
-                if (repo.getStargazers_count()
-                        > highestStars) {
-
-                    highestStars =
-                            repo.getStargazers_count();
+                if(topRepo == null ||
+                   repo.getStargazers_count() >
+                   topRepo.getStargazers_count()){
 
                     topRepo = repo;
                 }
 
-                String language = repo.getLanguage();
-
-                if (language != null) {
+                if(repo.getLanguage() != null){
 
                     languageCount.put(
-                            language,
+
+                            repo.getLanguage(),
 
                             languageCount.getOrDefault(
-                                    language, 0) + 1
+                                    repo.getLanguage(),
+                                    0
+                            ) + 1
                     );
                 }
             }
 
-            String topLanguage = "Not Available";
+            String topLanguage = "None";
 
             int max = 0;
 
-            for (String lang : languageCount.keySet()) {
+            for(String lang : languageCount.keySet()){
 
-                if (languageCount.get(lang) > max) {
+                if(languageCount.get(lang) > max){
 
                     max = languageCount.get(lang);
 
@@ -97,24 +99,27 @@ public class HomeController {
             model.addAttribute("repositories",
                     repositories);
 
+            model.addAttribute("repoCount",
+                    repositories.size());
+
             model.addAttribute("totalStars",
                     totalStars);
 
             model.addAttribute("totalForks",
                     totalForks);
 
-            model.addAttribute("topLanguage",
-                    topLanguage);
-
-            model.addAttribute("repoCount",
-                    repositories.size());
-
             model.addAttribute("topRepo",
                     topRepo);
 
+            model.addAttribute("topLanguage",
+                    topLanguage);
+
+            model.addAttribute("languageData",
+                    languageCount);
+
         }
 
-        catch (Exception e) {
+        catch (Exception e){
 
             model.addAttribute("error",
                     "GitHub user not found!");

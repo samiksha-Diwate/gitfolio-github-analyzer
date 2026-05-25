@@ -10,7 +10,6 @@
     <style>
 
         *{
-
             margin:0;
             padding:0;
             box-sizing:border-box;
@@ -20,7 +19,7 @@
 
             background:#0f172a;
             color:white;
-            font-family:Arial, sans-serif;
+            font-family:Arial;
             padding:30px;
         }
 
@@ -49,24 +48,12 @@
             color:white;
             text-decoration:none;
             margin-left:20px;
-            font-weight:bold;
-        }
-
-        nav a:hover{
-
-            color:#22c55e;
         }
 
         h1{
 
             color:#22c55e;
             margin-bottom:20px;
-        }
-
-        form{
-
-            margin-top:20px;
-            margin-bottom:30px;
         }
 
         input{
@@ -93,14 +80,7 @@
 
             color:white;
 
-            font-size:16px;
-
             cursor:pointer;
-        }
-
-        button:hover{
-
-            background:#16a34a;
         }
 
         .card{
@@ -114,25 +94,6 @@
             margin-top:30px;
 
             box-shadow:0 0 15px rgba(0,0,0,0.3);
-
-            transition:0.3s;
-        }
-
-        .card:hover{
-
-            transform:translateY(-5px);
-        }
-
-        img{
-
-            border-radius:50%;
-            width:120px;
-            margin-bottom:20px;
-        }
-
-        a{
-
-            text-decoration:none;
         }
 
         .repo-grid{
@@ -143,6 +104,13 @@
             repeat(auto-fit,minmax(300px,1fr));
 
             gap:20px;
+        }
+
+        img{
+
+            width:120px;
+
+            border-radius:50%;
         }
 
         footer{
@@ -182,8 +150,7 @@
 <h1>GitHub Portfolio Analyzer</h1>
 
 <form action="/search"
-      method="post"
-      onsubmit="showLoader()">
+      method="post">
 
     <input type="text"
            name="username"
@@ -198,13 +165,6 @@
 
 </form>
 
-<div id="loader"
-     style="display:none;">
-
-    <h2>Loading GitHub Data...</h2>
-
-</div>
-
 <div th:if="${error}"
      class="card">
 
@@ -213,10 +173,46 @@
 
 </div>
 
+<div th:if="${user}"
+     class="card">
+
+    <img th:src="${user.avatar_url}">
+
+    <br><br>
+
+    <h2 th:text="${user.name}"></h2>
+
+    <br>
+
+    <p th:text="${user.bio}"></p>
+
+    <br>
+
+    <p>
+        Followers:
+        <span th:text="${user.followers}"></span>
+    </p>
+
+    <br>
+
+    <p>
+        Following:
+        <span th:text="${user.following}"></span>
+    </p>
+
+    <br>
+
+    <p>
+        Public Repositories:
+        <span th:text="${user.public_repos}"></span>
+    </p>
+
+</div>
+
 <div th:if="${repoCount}"
      class="card">
 
-    <h2>GitHub Analytics Dashboard 📊</h2>
+    <h2>Analytics Dashboard 📊</h2>
 
     <br>
 
@@ -271,58 +267,13 @@
         <span th:text="${topRepo.stargazers_count}"></span>
     </p>
 
-    <br>
-
-    <a th:href="${topRepo.html_url}"
-       target="_blank"
-       style="color:#22c55e;">
-
-       Open Repository
-
-    </a>
-
 </div>
 
-<div th:if="${user}"
-     class="card">
+<div th:if="${repositories}">
 
-    <img th:src="${user.avatar_url}">
-
-    <h2 th:text="${user.name}"></h2>
-
-    <br>
-
-    <p th:text="${user.bio}"></p>
-
-    <br>
-
-    <p>
-        Followers:
-        <span th:text="${user.followers}"></span>
-    </p>
-
-    <br>
-
-    <p>
-        Following:
-        <span th:text="${user.following}"></span>
-    </p>
-
-    <br>
-
-    <p>
-        Public Repositories:
-        <span th:text="${user.public_repos}"></span>
-    </p>
-
-</div>
-
-<div th:if="${repositories}"
-     style="margin-top:30px;">
-
-    <h2>Repositories 🚀</h2>
-
-    <br>
+    <h2 style="margin-top:30px;">
+        Repositories 🚀
+    </h2>
 
     <div class="repo-grid">
 
@@ -341,26 +292,16 @@
             <br>
 
             <p>
-                ⭐ Stars:
+                Stars:
                 <span th:text="${repo.stargazers_count}"></span>
             </p>
 
             <br>
 
             <p>
-                🍴 Forks:
+                Forks:
                 <span th:text="${repo.forks_count}"></span>
             </p>
-
-            <br>
-
-            <a th:href="${repo.html_url}"
-               target="_blank"
-               style="color:#22c55e;">
-
-               View Repository
-
-            </a>
 
         </div>
 
@@ -371,11 +312,22 @@
 <div th:if="${repoCount}"
      class="card">
 
-    <h2>GitHub Statistics Chart 📈</h2>
+    <h2>Statistics Chart 📈</h2>
 
     <br>
 
     <canvas id="repoChart"></canvas>
+
+</div>
+
+<div th:if="${languageData}"
+     class="card">
+
+    <h2>Languages Pie Chart 🥧</h2>
+
+    <br>
+
+    <canvas id="languageChart"></canvas>
 
 </div>
 
@@ -388,12 +340,6 @@
 </footer>
 
 <script th:inline="javascript">
-
-    function showLoader(){
-
-        document.getElementById("loader")
-        .style.display = "block";
-    }
 
     let repoCount =
         [[${repoCount}]];
@@ -423,7 +369,7 @@
 
                 datasets:[{
 
-                    label:'GitHub Statistics',
+                    label:'GitHub Stats',
 
                     data:[
                         repoCount,
@@ -433,19 +379,32 @@
 
                     borderWidth:1
                 }]
-            },
+            }
+        });
+    }
 
-            options:{
+    let languageData =
+        [[${languageData}]];
 
-                responsive:true,
+    if(languageData){
 
-                scales:{
+        const langCtx =
+            document.getElementById(
+                'languageChart'
+            );
 
-                    y:{
+        new Chart(langCtx, {
 
-                        beginAtZero:true
-                    }
-                }
+            type:'pie',
+
+            data:{
+
+                labels:Object.keys(languageData),
+
+                datasets:[{
+
+                    data:Object.values(languageData)
+                }]
             }
         });
     }
