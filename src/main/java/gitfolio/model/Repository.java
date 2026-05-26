@@ -3,13 +3,16 @@ package gitfolio.model;
 public class Repository {
 
     private String name;
+
     private String html_url;
-    private String language;
+
+    private String description;
+
     private int stargazers_count;
+
     private int forks_count;
 
-    public Repository() {
-    }
+    // GETTERS AND SETTERS
 
     public String getName() {
         return name;
@@ -27,12 +30,12 @@ public class Repository {
         this.html_url = html_url;
     }
 
-    public String getLanguage() {
-        return language;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getStargazers_count() {
