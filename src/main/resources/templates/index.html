@@ -149,6 +149,30 @@
             font-weight:bold;
         }
 
+        .language-section{
+            margin-top:40px;
+        }
+
+        .language-container{
+            display:flex;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        .language-card{
+            background:#161b22;
+            padding:20px;
+            border-radius:15px;
+            width:180px;
+            text-align:center;
+            border:1px solid #30363d;
+            transition:0.3s;
+        }
+
+        .language-card:hover{
+            transform:translateY(-5px);
+        }
+
     </style>
 </head>
 
@@ -295,6 +319,29 @@
                 💻 Language:
                 <span th:text="${repo.language}"></span>
             </p>
+
+        </div>
+
+    </div>
+
+    <div class="language-section"
+         th:if="${languageCount}">
+
+        <h2>Top Languages</h2>
+
+        <div class="language-container">
+
+            <div class="language-card"
+                 th:each="lang : ${languageCount}">
+
+                <h3 th:text="${lang.key}"></h3>
+
+                <p>
+                    Repositories:
+                    <span th:text="${lang.value}"></span>
+                </p>
+
+            </div>
 
         </div>
 
