@@ -47,6 +47,34 @@
             cursor:pointer;
         }
 
+        .loading{
+            display:none;
+            text-align:center;
+            margin-top:20px;
+        }
+
+        .spinner{
+            width:50px;
+            height:50px;
+            border:5px solid #30363d;
+            border-top:5px solid #58a6ff;
+            border-radius:50%;
+            animation: spin 1s linear infinite;
+            margin:auto;
+        }
+
+        @keyframes spin{
+
+            0%{
+                transform: rotate(0deg);
+            }
+
+            100%{
+                transform: rotate(360deg);
+            }
+
+        }
+
         .profile{
             margin-top:40px;
             background:#161b22;
@@ -130,26 +158,46 @@
 
     <h1>GitFolio - GitHub Analyzer</h1>
 
-    <form action="/search" method="post">
+    <form action="/search"
+          method="post"
+          id="searchForm">
 
         <input type="text"
                name="username"
                placeholder="Enter GitHub Username"
                required>
 
-        <button type="submit">
+        <button type="submit"
+                id="searchBtn">
+
             Search
+
         </button>
 
     </form>
 
-    <div th:if="${error}">
-        <h3 th:text="${error}" style="color:red;"></h3>
+    <div class="loading"
+         id="loadingBox">
+
+        <div class="spinner"></div>
+
+        <h3>
+            Analyzing GitHub Profile...
+        </h3>
+
     </div>
 
-    <div class="profile" th:if="${user}">
+    <div th:if="${error}">
+        <h3 th:text="${error}"
+            style="color:red;">
+        </h3>
+    </div>
 
-        <img th:src="${user.avatar_url}" alt="avatar">
+    <div class="profile"
+         th:if="${user}">
+
+        <img th:src="${user.avatar_url}"
+             alt="avatar">
 
         <h2 th:text="${user.name}"></h2>
 
@@ -175,7 +223,8 @@
 
     </div>
 
-    <div class="stats" th:if="${repositories}">
+    <div class="stats"
+         th:if="${repositories}">
 
         <div class="stat-card">
             <h2 th:text="${totalStars}"></h2>
@@ -199,7 +248,8 @@
 
     </div>
 
-    <div class="charts" th:if="${repositories}">
+    <div class="charts"
+         th:if="${repositories}">
 
         <div class="chart-box">
             <canvas id="starsChart"></canvas>
@@ -211,7 +261,8 @@
 
     </div>
 
-    <div class="repos" th:if="${repositories}">
+    <div class="repos"
+         th:if="${repositories}">
 
         <h2>Repositories</h2>
 
@@ -354,6 +405,19 @@
         });
 
     }
+
+    const form =
+            document.getElementById("searchForm");
+
+    form.addEventListener("submit", function(){
+
+        document.getElementById("loadingBox")
+                .style.display = "block";
+
+        document.getElementById("searchBtn")
+                .disabled = true;
+
+    });
 
 </script>
 
