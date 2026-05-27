@@ -1,2 +1,2 @@
-﻿# Security Headers
-CSRF tokens are embedded in Thymeleaf templates using meta headers for REST calls.
+﻿# Security Password Encryptions
+Sets BCrypt entropy strength parameters to 12.
