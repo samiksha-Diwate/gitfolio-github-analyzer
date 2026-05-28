@@ -1,2 +1,2 @@
-﻿# Search History Log Mappings
-Keeps track of username queried, timestamp, and results stats summary.
+﻿# Index Settings
+Added indexing key on search_timestamp columns to fetch recent search records quickly.
