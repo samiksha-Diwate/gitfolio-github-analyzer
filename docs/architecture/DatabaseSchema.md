@@ -1,2 +1,2 @@
-﻿# JPA Entity Mappings
-One-to-Many cascade constraints between User accounts and search logs history.
+﻿# Search History Log Mappings
+Keeps track of username queried, timestamp, and results stats summary.
