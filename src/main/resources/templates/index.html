@@ -245,6 +245,29 @@
             <span th:text="${user.public_repos}"></span>
         </p>
 
+        <p>
+    Bio:
+    <span th:text="${user.bio}"></span>
+</p>
+
+<p>
+    Location:
+    <span th:text="${user.location}"></span>
+</p>
+
+<p>
+    Company:
+    <span th:text="${user.company}"></span>
+</p>
+
+<p>
+    Blog:
+    <a th:href="${user.blog}"
+       th:text="${user.blog}"
+       target="_blank">
+    </a>
+</p>
+
     </div>
 
     <div class="stats"

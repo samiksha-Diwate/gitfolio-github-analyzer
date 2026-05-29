@@ -3,20 +3,19 @@ package gitfolio.model;
 public class GitHubUser {
 
     private String login;
-
     private String name;
-
-    private String bio;
-
     private String avatar_url;
-
     private int followers;
-
     private int following;
-
     private int public_repos;
 
-    // GETTERS AND SETTERS
+    private String bio;
+    private String location;
+    private String company;
+    private String blog;
+
+    public GitHubUser() {
+    }
 
     public String getLogin() {
         return login;
@@ -32,14 +31,6 @@ public class GitHubUser {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
     }
 
     public String getAvatar_url() {
@@ -72,5 +63,37 @@ public class GitHubUser {
 
     public void setPublic_repos(int public_repos) {
         this.public_repos = public_repos;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getBlog() {
+        return blog;
+    }
+
+    public void setBlog(String blog) {
+        this.blog = blog;
     }
 }
