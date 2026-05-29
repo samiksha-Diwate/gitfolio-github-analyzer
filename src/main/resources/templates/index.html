@@ -284,8 +284,6 @@
 
     </div>
 
-    <!-- PROFILE -->
-
     <div class="profile"
          th:if="${user}">
 
@@ -451,37 +449,73 @@
     <div class="repos"
          th:if="${repositories}">
 
-        <h2>Repositories</h2>
+        <div style="display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    flex-wrap:wrap;">
+
+            <h2>Repositories</h2>
+
+            <div style="display:flex; gap:10px;">
+
+                <button type="button"
+                        onclick="sortByStars()">
+
+                    Sort By Stars
+
+                </button>
+
+                <button type="button"
+                        onclick="sortByForks()">
+
+                    Sort By Forks
+
+                </button>
+
+                <button type="button"
+                        onclick="sortByName()">
+
+                    Sort By Name
+
+                </button>
+
+            </div>
+
+        </div>
 
         <input type="text"
                id="repoSearch"
                class="repo-search"
                placeholder="Search repositories...">
 
-        <div class="repo-card"
-             th:each="repo : ${repositories}">
+        <div id="repoContainer">
 
-            <a th:href="${repo.html_url}"
-               target="_blank"
-               th:text="${repo.name}">
-            </a>
+            <div class="repo-card"
+                 th:each="repo : ${repositories}">
 
-            <p th:text="${repo.description}"></p>
+                <a th:href="${repo.html_url}"
+                   target="_blank"
+                   th:text="${repo.name}">
+                </a>
 
-            <p>
-                ⭐ Stars:
-                <span th:text="${repo.stargazers_count}"></span>
-            </p>
+                <p th:text="${repo.description}"></p>
 
-            <p>
-                🍴 Forks:
-                <span th:text="${repo.forks_count}"></span>
-            </p>
+                <p>
+                    ⭐ Stars:
+                    <span th:text="${repo.stargazers_count}"></span>
+                </p>
 
-            <p>
-                💻 Language:
-                <span th:text="${repo.language}"></span>
-            </p>
+                <p>
+                    🍴 Forks:
+                    <span th:text="${repo.forks_count}"></span>
+                </p>
+
+                <p>
+                    💻 Language:
+                    <span th:text="${repo.language}"></span>
+                </p>
+
+            </div>
 
         </div>
 
@@ -582,6 +616,85 @@
                 }]
 
             }
+
+        });
+
+    }
+
+    function sortByStars(){
+
+        repos.sort((a,b) =>
+            b.stargazers_count -
+            a.stargazers_count);
+
+        renderRepositories();
+
+    }
+
+    function sortByForks(){
+
+        repos.sort((a,b) =>
+            b.forks_count -
+            a.forks_count);
+
+        renderRepositories();
+
+    }
+
+    function sortByName(){
+
+        repos.sort((a,b) =>
+            a.name.localeCompare(b.name));
+
+        renderRepositories();
+
+    }
+
+    function renderRepositories(){
+
+        let repoContainer =
+            document.getElementById("repoContainer");
+
+        repoContainer.innerHTML = "";
+
+        repos.forEach(repo => {
+
+            let div =
+                document.createElement("div");
+
+            div.classList.add("repo-card");
+
+            div.innerHTML = `
+
+                <a href="${repo.html_url}"
+                   target="_blank">
+
+                   ${repo.name}
+
+                </a>
+
+                <p>
+                    ${repo.description || "No Description"}
+                </p>
+
+                <p>
+                    ⭐ Stars:
+                    ${repo.stargazers_count}
+                </p>
+
+                <p>
+                    🍴 Forks:
+                    ${repo.forks_count}
+                </p>
+
+                <p>
+                    💻 Language:
+                    ${repo.language || "N/A"}
+                </p>
+
+            `;
+
+            repoContainer.appendChild(div);
 
         });
 
