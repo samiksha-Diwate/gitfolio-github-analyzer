@@ -319,6 +319,61 @@
 
     </div>
 
+
+       <div th:if="${repositories}"
+     style="margin-top:40px;">
+
+    <h2 style="color:#58a6ff;">
+        Top Repositories
+    </h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns:
+        repeat(auto-fit,minmax(300px,1fr));
+        gap:20px;
+        margin-top:20px;
+    ">
+
+        <div class="repo-card"
+             th:each="repo,iter : ${repositories}"
+             th:if="${iter.index < 3}">
+
+            <h2 style="color:gold;">
+                TOP [[${iter.index + 1}]]
+            </h2>
+
+            <a th:href="${repo.html_url}"
+               target="_blank"
+               th:text="${repo.name}">
+            </a>
+
+            <p th:text="${repo.description}"></p>
+
+            <p>
+                ⭐ Stars:
+                <span th:text="${repo.stargazers_count}">
+                </span>
+            </p>
+
+            <p>
+                🍴 Forks:
+                <span th:text="${repo.forks_count}">
+                </span>
+            </p>
+
+            <p>
+                💻 Language:
+                <span th:text="${repo.language}">
+                </span>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
     <div class="stats"
          th:if="${repositories}">
 
