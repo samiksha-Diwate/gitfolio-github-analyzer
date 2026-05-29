@@ -1,5 +1,6 @@
 package gitfolio.controller;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,15 +35,30 @@ public class HomeController {
 
         try {
 
-            GitHubUser user = gitHubService.getUser(username);
+            GitHubUser user =
+                    gitHubService.getUser(username);
 
             List<Repository> repositories =
                     gitHubService.getRepositories(username);
+
+            repositories.sort(
+                    Comparator.comparingInt(
+                            Repository::getStargazers_count
+                    ).reversed()
+            );
+
+            int totalStars = 0;
+
+            int totalForks = 0;
 
             Map<String, Integer> languageCount =
                     new HashMap<>();
 
             for (Repository repo : repositories) {
+
+                totalStars += repo.getStargazers_count();
+
+                totalForks += repo.getForks_count();
 
                 if (repo.getLanguage() != null) {
 
@@ -57,6 +73,22 @@ public class HomeController {
                 }
             }
 
+            String favoriteLanguage = "None";
+
+            int max = 0;
+
+            for (Map.Entry<String, Integer> entry
+                    : languageCount.entrySet()) {
+
+                if (entry.getValue() > max) {
+
+                    max = entry.getValue();
+
+                    favoriteLanguage =
+                            entry.getKey();
+                }
+            }
+
             model.addAttribute("user", user);
 
             model.addAttribute(
@@ -65,8 +97,28 @@ public class HomeController {
             );
 
             model.addAttribute(
+                    "totalStars",
+                    totalStars
+            );
+
+            model.addAttribute(
+                    "totalForks",
+                    totalForks
+            );
+
+            model.addAttribute(
+                    "favoriteLanguage",
+                    favoriteLanguage
+            );
+
+            model.addAttribute(
+                    "totalRepos",
+                    repositories.size()
+            );
+
+            model.addAttribute(
                     "languageCount",
-                    languageCount
+                    languageCount.entrySet()
             );
 
         }
