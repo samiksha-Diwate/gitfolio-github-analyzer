@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <title>GitFolio</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -24,6 +26,7 @@
         h1{
             text-align:center;
             color:#58a6ff;
+            margin-bottom:30px;
         }
 
         form{
@@ -32,19 +35,27 @@
         }
 
         input{
-            padding:10px;
-            width:300px;
+            padding:12px;
+            width:320px;
             border:none;
-            border-radius:5px;
+            border-radius:8px;
+            background:#161b22;
+            color:white;
         }
 
         button{
-            padding:10px 20px;
+            padding:12px 20px;
             background:#238636;
             color:white;
             border:none;
-            border-radius:5px;
+            border-radius:8px;
             cursor:pointer;
+            margin-left:10px;
+            font-weight:bold;
+        }
+
+        button:hover{
+            background:#2ea043;
         }
 
         .loading{
@@ -78,32 +89,57 @@
         .profile{
             margin-top:40px;
             background:#161b22;
-            padding:20px;
-            border-radius:10px;
+            padding:30px;
+            border-radius:15px;
+            border:1px solid #30363d;
         }
 
         .profile img{
-            width:120px;
+            width:130px;
+            height:130px;
             border-radius:50%;
+            border:4px solid #58a6ff;
+        }
+
+        .profile h2{
+            margin-top:15px;
+            color:#58a6ff;
+        }
+
+        .profile p{
+            margin:10px 0;
+            font-size:16px;
+        }
+
+        .profile a{
+            color:#58a6ff;
+            text-decoration:none;
         }
 
         .stats{
             display:grid;
             grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
             gap:20px;
-            margin-top:30px;
+            margin-top:35px;
         }
 
         .stat-card{
             background:#161b22;
-            padding:20px;
-            border-radius:10px;
+            padding:25px;
+            border-radius:15px;
             text-align:center;
+            border:1px solid #30363d;
+            transition:0.3s;
+        }
+
+        .stat-card:hover{
+            transform:translateY(-5px);
         }
 
         .stat-card h2{
             color:#58a6ff;
-            font-size:32px;
+            font-size:35px;
+            margin-bottom:10px;
         }
 
         .charts{
@@ -116,12 +152,13 @@
         .chart-box{
             background:#161b22;
             padding:20px;
-            border-radius:10px;
+            border-radius:15px;
             width:450px;
+            border:1px solid #30363d;
         }
 
         .repos{
-            margin-top:30px;
+            margin-top:40px;
         }
 
         .repo-search{
@@ -132,10 +169,11 @@
 
         .repo-card{
             background:#161b22;
-            padding:15px;
-            margin-bottom:15px;
-            border-radius:10px;
+            padding:20px;
+            margin-bottom:20px;
+            border-radius:15px;
             transition:0.3s;
+            border:1px solid #30363d;
         }
 
         .repo-card:hover{
@@ -145,12 +183,16 @@
         .repo-card a{
             color:#58a6ff;
             text-decoration:none;
-            font-size:20px;
+            font-size:22px;
             font-weight:bold;
         }
 
+        .repo-card p{
+            margin-top:10px;
+        }
+
         .language-section{
-            margin-top:40px;
+            margin-top:50px;
         }
 
         .language-container{
@@ -173,7 +215,12 @@
             transform:translateY(-5px);
         }
 
+        .language-card h3{
+            color:#58a6ff;
+        }
+
     </style>
+
 </head>
 
 <body>
@@ -212,9 +259,11 @@
     </div>
 
     <div th:if="${error}">
+
         <h3 th:text="${error}"
-            style="color:red;">
+            style="color:red; text-align:center; margin-top:20px;">
         </h3>
+
     </div>
 
     <div class="profile"
@@ -246,27 +295,27 @@
         </p>
 
         <p>
-    Bio:
-    <span th:text="${user.bio}"></span>
-</p>
+            Bio:
+            <span th:text="${user.bio}"></span>
+        </p>
 
-<p>
-    Location:
-    <span th:text="${user.location}"></span>
-</p>
+        <p>
+            Location:
+            <span th:text="${user.location}"></span>
+        </p>
 
-<p>
-    Company:
-    <span th:text="${user.company}"></span>
-</p>
+        <p>
+            Company:
+            <span th:text="${user.company}"></span>
+        </p>
 
-<p>
-    Blog:
-    <a th:href="${user.blog}"
-       th:text="${user.blog}"
-       target="_blank">
-    </a>
-</p>
+        <p>
+            Blog:
+            <a th:href="${user.blog}"
+               th:text="${user.blog}"
+               target="_blank">
+            </a>
+        </p>
 
     </div>
 
@@ -274,23 +323,35 @@
          th:if="${repositories}">
 
         <div class="stat-card">
+
             <h2 th:text="${totalStars}"></h2>
+
             <p>Total Stars</p>
+
         </div>
 
         <div class="stat-card">
+
             <h2 th:text="${totalForks}"></h2>
+
             <p>Total Forks</p>
+
         </div>
 
         <div class="stat-card">
+
             <h2 th:text="${favoriteLanguage}"></h2>
+
             <p>Favorite Language</p>
+
         </div>
 
         <div class="stat-card">
+
             <h2 th:text="${totalRepos}"></h2>
+
             <p>Total Repositories</p>
+
         </div>
 
     </div>
@@ -299,11 +360,15 @@
          th:if="${repositories}">
 
         <div class="chart-box">
+
             <canvas id="starsChart"></canvas>
+
         </div>
 
         <div class="chart-box">
+
             <canvas id="languageChart"></canvas>
+
         </div>
 
     </div>
@@ -379,6 +444,7 @@
     if(repos){
 
         let repoNames = [];
+
         let stars = [];
 
         let languageMap = {};
@@ -399,6 +465,7 @@
 
                     languageMap[repo.language] = 1;
                 }
+
             }
 
         });
@@ -418,6 +485,7 @@
                     data: stars
 
                 }]
+
             }
 
         });
@@ -435,6 +503,7 @@
                     data: Object.values(languageMap)
 
                 }]
+
             }
 
         });
@@ -492,4 +561,5 @@
 </script>
 
 </body>
+
 </html>
