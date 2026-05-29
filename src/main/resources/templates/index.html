@@ -92,6 +92,7 @@
             padding:30px;
             border-radius:15px;
             border:1px solid #30363d;
+            text-align:center;
         }
 
         .profile img{
@@ -219,6 +220,23 @@
             color:#58a6ff;
         }
 
+        .top-repo-title{
+            color:#58a6ff;
+            margin-top:50px;
+        }
+
+        .top-repo-container{
+            display:grid;
+            grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+            gap:20px;
+            margin-top:20px;
+        }
+
+        .top-badge{
+            color:gold;
+            margin-bottom:10px;
+        }
+
     </style>
 
 </head>
@@ -265,6 +283,8 @@
         </h3>
 
     </div>
+
+    <!-- PROFILE -->
 
     <div class="profile"
          th:if="${user}">
@@ -319,60 +339,56 @@
 
     </div>
 
+    <!-- TOP REPOSITORIES -->
 
-       <div th:if="${repositories}"
-     style="margin-top:40px;">
+    <div th:if="${repositories}">
 
-    <h2 style="color:#58a6ff;">
-        Top Repositories
-    </h2>
+        <h2 class="top-repo-title">
+            Top Repositories
+        </h2>
 
-    <div style="
-        display:grid;
-        grid-template-columns:
-        repeat(auto-fit,minmax(300px,1fr));
-        gap:20px;
-        margin-top:20px;
-    ">
+        <div class="top-repo-container">
 
-        <div class="repo-card"
-             th:each="repo,iter : ${repositories}"
-             th:if="${iter.index < 3}">
+            <div class="repo-card"
+                 th:each="repo,iter : ${repositories}"
+                 th:if="${iter.index < 3}">
 
-            <h2 style="color:gold;">
-                TOP [[${iter.index + 1}]]
-            </h2>
+                <h2 class="top-badge">
+                    TOP [[${iter.index + 1}]]
+                </h2>
 
-            <a th:href="${repo.html_url}"
-               target="_blank"
-               th:text="${repo.name}">
-            </a>
+                <a th:href="${repo.html_url}"
+                   target="_blank"
+                   th:text="${repo.name}">
+                </a>
 
-            <p th:text="${repo.description}"></p>
+                <p th:text="${repo.description}"></p>
 
-            <p>
-                ⭐ Stars:
-                <span th:text="${repo.stargazers_count}">
-                </span>
-            </p>
+                <p>
+                    ⭐ Stars:
+                    <span th:text="${repo.stargazers_count}">
+                    </span>
+                </p>
 
-            <p>
-                🍴 Forks:
-                <span th:text="${repo.forks_count}">
-                </span>
-            </p>
+                <p>
+                    🍴 Forks:
+                    <span th:text="${repo.forks_count}">
+                    </span>
+                </p>
 
-            <p>
-                💻 Language:
-                <span th:text="${repo.language}">
-                </span>
-            </p>
+                <p>
+                    💻 Language:
+                    <span th:text="${repo.language}">
+                    </span>
+                </p>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
+    <!-- STATS -->
 
     <div class="stats"
          th:if="${repositories}">
@@ -411,6 +427,8 @@
 
     </div>
 
+    <!-- CHARTS -->
+
     <div class="charts"
          th:if="${repositories}">
 
@@ -427,6 +445,8 @@
         </div>
 
     </div>
+
+    <!-- REPOSITORIES -->
 
     <div class="repos"
          th:if="${repositories}">
@@ -466,6 +486,8 @@
         </div>
 
     </div>
+
+    <!-- LANGUAGE SECTION -->
 
     <div class="language-section"
          th:if="${languageCount}">
