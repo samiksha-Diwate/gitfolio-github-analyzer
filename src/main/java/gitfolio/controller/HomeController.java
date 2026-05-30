@@ -48,7 +48,6 @@ public class HomeController {
             );
 
             int totalStars = 0;
-
             int totalForks = 0;
 
             Map<String, Integer> languageCount =
@@ -64,7 +63,6 @@ public class HomeController {
 
                     languageCount.put(
                             repo.getLanguage(),
-
                             languageCount.getOrDefault(
                                     repo.getLanguage(),
                                     0
@@ -74,7 +72,6 @@ public class HomeController {
             }
 
             String favoriteLanguage = "None";
-
             int max = 0;
 
             for (Map.Entry<String, Integer> entry
@@ -89,7 +86,43 @@ public class HomeController {
                 }
             }
 
-            model.addAttribute("user", user);
+            String mostStarredRepo = "None";
+            int maxStars = 0;
+
+            String mostForkedRepo = "None";
+            int maxForks = 0;
+
+            for (Repository repo : repositories) {
+
+                if (repo.getStargazers_count() > maxStars) {
+
+                    maxStars =
+                            repo.getStargazers_count();
+
+                    mostStarredRepo =
+                            repo.getName();
+                }
+
+                if (repo.getForks_count() > maxForks) {
+
+                    maxForks =
+                            repo.getForks_count();
+
+                    mostForkedRepo =
+                            repo.getName();
+                }
+            }
+
+            double avgStars =
+                    repositories.isEmpty()
+                    ? 0
+                    : (double) totalStars /
+                      repositories.size();
+
+            model.addAttribute(
+                    "user",
+                    user
+            );
 
             model.addAttribute(
                     "repositories",
@@ -119,6 +152,26 @@ public class HomeController {
             model.addAttribute(
                     "languageCount",
                     languageCount.entrySet()
+            );
+
+            model.addAttribute(
+                    "mostStarredRepo",
+                    mostStarredRepo
+            );
+
+            model.addAttribute(
+                    "mostForkedRepo",
+                    mostForkedRepo
+            );
+
+            model.addAttribute(
+                    "totalLanguages",
+                    languageCount.size()
+            );
+
+            model.addAttribute(
+                    "avgStars",
+                    String.format("%.2f", avgStars)
             );
 
         }
