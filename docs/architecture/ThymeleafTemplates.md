@@ -1,2 +1,2 @@
-﻿# Thymeleaf Fragment Imports
-Splits sidebar layout and dashboard analytics panels into decoupled html templates.
+﻿# Chart Rendering Hooks
+Chart script tags instantiate charts by parsing serialized arrays passed in Model attributes.
