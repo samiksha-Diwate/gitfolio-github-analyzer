@@ -389,24 +389,49 @@
     <!-- STATS -->
 
     <div class="stats"
-         th:if="${repositories}">
+     th:if="${repositories}">
 
-        <div class="stat-card">
+    <div class="stat-card">
+        <h2 th:text="${totalStars}"></h2>
+        <p>Total Stars</p>
+    </div>
 
-            <h2 th:text="${totalStars}"></h2>
+    <div class="stat-card">
+        <h2 th:text="${totalForks}"></h2>
+        <p>Total Forks</p>
+    </div>
 
-            <p>Total Stars</p>
+    <div class="stat-card">
+        <h2 th:text="${favoriteLanguage}"></h2>
+        <p>Favorite Language</p>
+    </div>
 
-        </div>
+    <div class="stat-card">
+        <h2 th:text="${totalRepos}"></h2>
+        <p>Total Repositories</p>
+    </div>
 
-        <div class="stat-card">
+    <div class="stat-card">
+        <h2 th:text="${mostStarredRepo}"></h2>
+        <p>Most Starred Repo</p>
+    </div>
 
-            <h2 th:text="${totalForks}"></h2>
+    <div class="stat-card">
+        <h2 th:text="${mostForkedRepo}"></h2>
+        <p>Most Forked Repo</p>
+    </div>
 
-            <p>Total Forks</p>
+    <div class="stat-card">
+        <h2 th:text="${avgStars}"></h2>
+        <p>Average Stars</p>
+    </div>
 
-        </div>
+    <div class="stat-card">
+        <h2 th:text="${totalLanguages}"></h2>
+        <p>Total Languages</p>
+    </div>
 
+</div>
         <div class="stat-card">
 
             <h2 th:text="${favoriteLanguage}"></h2>
