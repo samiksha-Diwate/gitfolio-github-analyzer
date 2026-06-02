@@ -9,9 +9,10 @@ public class Repository {
     private int forks_count;
     private String language;
 
-    // NEW FIELDS
     private String created_at;
     private String updated_at;
+    private int open_issues_count;
+    private int size;
 
     public Repository() {
     }
@@ -78,5 +79,21 @@ public class Repository {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getOpen_issues_count() {
+        return open_issues_count;
+    }
+
+    public void setOpen_issues_count(int open_issues_count) {
+        this.open_issues_count = open_issues_count;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }
