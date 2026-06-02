@@ -587,10 +587,16 @@
 
                 <h3 th:text="${lang.key}"></h3>
 
-                <p>
-                    Repositories:
-                    <span th:text="${lang.value}"></span>
-                </p>
+<p>
+    Repositories:
+    <span th:text="${lang.value}"></span>
+</p>
+
+<progress
+        th:value="${lang.value}"
+        th:max="${totalRepos}"
+        style="width:100%;">
+</progress>
 
             </div>
 
