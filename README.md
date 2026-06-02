@@ -30,3 +30,20 @@ GitFolio is a GitHub Portfolio Analyzer built using:
 - Contribution heatmaps
 - PDF export
 - GitHub authentication
+
+# GitFolio
+
+GitHub Profile Analyzer built using:
+
+- Spring Boot
+- Thymeleaf
+- GitHub REST API
+- Chart.js
+
+Features:
+- GitHub Profile Search
+- Repository Analytics
+- Top Repositories
+- Language Analysis
+- Stars & Forks Statistics
+- Repository Metadata
