@@ -1,5 +1,2 @@
-﻿# Spring Security Config
-
-## Authentication Logic
-Uses BCryptPasswordEncoder to secure user passwords in the local database. 
-Form login handles sign in, placing authenticated user information in the SecurityContextHolder.
+﻿# Security Headers
+CSRF tokens are embedded in Thymeleaf templates using meta headers for REST calls.
