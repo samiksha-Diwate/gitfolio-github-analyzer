@@ -31,7 +31,7 @@ public class LoginController {
         if (user != null) {
             return "redirect:/search-page";
         } else {
-            return "redirect:/login?error";
+            return "redirect:/home";
         }
     }
 }
