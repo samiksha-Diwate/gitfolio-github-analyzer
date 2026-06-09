@@ -45,7 +45,14 @@ public class SecurityConfig {
 
             .headers(headers -> headers
                 .frameOptions(frame -> frame.disable()) // for H2 console
-            );
+            )
+
+            .formLogin(form -> form
+    .loginPage("/login")
+    .loginProcessingUrl("/login")   // ✅ IMPORTANT FIX
+    .defaultSuccessUrl("/home", true)
+    .permitAll()
+);
 
         return http.build();
     }
