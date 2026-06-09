@@ -1,6 +1,2 @@
-﻿# Database Schema & Models
-
-## Entities
-- **User:** Stores local application accounts (username, password).
-- **SearchHistory:** Tracks previously requested GitHub usernames and search timestamps.
-- **FavoriteProfile:** Connects Users to their favorited GitHub accounts.
+﻿# Database Indexing
+Added index on SearchHistory search timestamp to speed up user history sorting queries.
