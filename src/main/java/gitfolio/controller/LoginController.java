@@ -1,8 +1,21 @@
+package gitfolio.controller;
+
+import gitfolio.service.UserService;
+import gitfolio.model.User;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String home() {
@@ -16,24 +29,26 @@ public class LoginController {
 
     @PostMapping("/do-login")
     public String doLogin(@RequestParam String username,
-                          @RequestParam String password) {
+                          @RequestParam String password,
+                          HttpSession session) {
 
         User user = userService.login(username, password);
 
-        System.out.println("Username = " + username);
-        System.out.println("Password = " + password);
-        System.out.println("User Found = " + user);
-
         if (user != null) {
+            session.setAttribute("user", user);
             return "redirect:/dashboard";
-        } else {
-            return "redirect:/login?error";
         }
+
+        return "redirect:/login?error";
     }
 
-    // TEMP PAGE TO TEST LOGIN SUCCESS
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
         return "dashboard";
     }
 }

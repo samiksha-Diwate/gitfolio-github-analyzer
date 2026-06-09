@@ -10,18 +10,45 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    public Long getId() { return id; }
+    // Default constructor
+    public User() {}
 
-    public void setId(Long id) { this.id = id; }
+    // Parameterized constructor
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-    public String getUsername() { return username; }
+    // Getter and Setter for id
+    public Long getId() {
+        return id;
+    }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getPassword() { return password; }
+    // Getter and Setter for username
+    public String getUsername() {
+        return username;
+    }
 
-    public void setPassword(String password) { this.password = password; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // Getter and Setter for password
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

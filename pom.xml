@@ -24,6 +24,7 @@
         <java.version>21</java.version>
     </properties>
 
+    <!-- ✅ ALL DEPENDENCIES MUST BE INSIDE THIS BLOCK -->
     <dependencies>
 
         <!-- Spring MVC -->
@@ -77,6 +78,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- SECURITY (FIXED LOCATION) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
     </dependencies>
