@@ -1,40 +1,28 @@
 package gitfolio.controller;
 
 import gitfolio.model.User;
-import gitfolio.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import gitfolio.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
-    public String register(@RequestParam String username,
-                           @RequestParam String password) {
-
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-
-        userService.register(user);
-
-        return "redirect:/login";
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password) {
+    @PostMapping("/register")
+    public String register(@RequestBody User user) {
 
-        User user = userService.login(username, password);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
 
-        if (user != null) {
-            return "redirect:/search";
-        } else {
-            return "redirect:/login?error";
-        }
+        return "User registered successfully!";
     }
 }
