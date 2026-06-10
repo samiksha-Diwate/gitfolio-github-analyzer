@@ -41,6 +41,9 @@ public class SecurityConfig {
                 .permitAll()
             )
 
+            // ✅ IMPORTANT FIX: attach custom authentication provider
+            .authenticationProvider(authenticationProvider())
+
             .logout(logout -> logout
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
