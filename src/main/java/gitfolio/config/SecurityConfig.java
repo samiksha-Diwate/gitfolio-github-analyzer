@@ -20,7 +20,6 @@ public class SecurityConfig {
         this.customUserDetailsService = customUserDetailsService;
     }
 
-    // 🔐 MAIN SECURITY CONFIG
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -28,52 +27,50 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/login", "/h2-console/**").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/login", "/auth/**", "/h2-console/**", "/css/**", "/js/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
             )
 
             .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/dashboard", true)
+                .failureUrl("/login?error")
                 .permitAll()
             )
 
             .logout(logout -> logout
-                .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
+                .permitAll()
             )
 
-            .headers(headers -> headers
-                .frameOptions(frame -> frame.disable()) // for H2 console
-            )
-
-            .formLogin(form -> form
-    .loginPage("/login")
-    .loginProcessingUrl("/login")   // ✅ IMPORTANT FIX
-    .defaultSuccessUrl("/home", true)
-    .permitAll()
-);
+            .headers(headers ->
+                headers.frameOptions(frame -> frame.disable())
+            );
 
         return http.build();
     }
 
-    // 🔥 THIS IS THE IMPORTANT PART (CONNECT DB LOGIN)
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
 
-        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(customUserDetailsService);
-        auth.setPasswordEncoder(passwordEncoder());
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider();
 
-        return auth;
+        authProvider.setUserDetailsService(customUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    // 🔑 PASSWORD ENCODER (BCrypt)
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
