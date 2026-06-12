@@ -5,6 +5,8 @@ import gitfolio.model.User;
 import gitfolio.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 
+import java.security.Principal;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,11 +59,13 @@ CommandLineRunner run(UserRepository repo, PasswordEncoder encoder) {
     };
 }
 
-    @GetMapping("/dashboard")
-    public String dashboard(HttpSession session) {
+   @GetMapping("/dashboard")
+public String dashboard(Model model, Principal principal) {
 
-        
+    String username = principal.getName();
 
-        return "dashboard";
-    }
+    model.addAttribute("username", username);
+
+    return "dashboard";
+}
 }
