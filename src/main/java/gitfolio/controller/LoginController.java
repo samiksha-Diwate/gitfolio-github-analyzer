@@ -60,9 +60,7 @@ CommandLineRunner run(UserRepository repo, PasswordEncoder encoder) {
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session) {
 
-        if (session.getAttribute("user") == null) {
-            return "redirect:/login";
-        }
+        
 
         return "dashboard";
     }
