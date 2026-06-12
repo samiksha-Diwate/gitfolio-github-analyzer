@@ -2,7 +2,12 @@ package gitfolio.controller;
 
 import gitfolio.service.UserService;
 import gitfolio.model.User;
+import gitfolio.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +46,16 @@ public class LoginController {
 
         return "redirect:/login?error";
     }
+
+    @Bean
+CommandLineRunner run(UserRepository repo, PasswordEncoder encoder) {
+    return args -> {
+        repo.save(new User(
+            "testuser",
+            encoder.encode("test123")
+        ));
+    };
+}
 
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session) {
