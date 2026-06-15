@@ -1,2 +1,2 @@
-﻿# WebClient Error Filters
-Intercepts status codes 403 (Rate Limit) and 404 (Not Found) to bubble exceptions.
+﻿# Rate Limiting Headers Filters
+Parses remaining API allowance headers to warn UI users when approaching limits.
