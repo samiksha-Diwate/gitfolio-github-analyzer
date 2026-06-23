@@ -1,2 +1,2 @@
-﻿# Integration Tests
-Verifies mock HTTP calls to external GitHub endpoints respond correctly under simulated failures.
+﻿# Controller Unit Tests
+Uses MockMvc to verify profile favorites addition requires login redirect.
