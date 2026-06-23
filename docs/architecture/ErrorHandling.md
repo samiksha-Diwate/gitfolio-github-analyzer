@@ -1,5 +1,2 @@
-﻿# API Error and Exception Handling
-
-## Custom Exceptions
-- GitHubUserNotFoundException: HTTP 404 handler.
-- GitHubRateLimitExceededException: HTTP 403 / header validation.
+﻿# Global Exceptions Handler
+Binds custom responses to 404 Not Found and 500 Server Error paths with dynamic messages.
