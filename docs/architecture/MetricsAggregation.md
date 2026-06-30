@@ -1,5 +1,3 @@
-﻿# Programming Language Percentage Aggregation
-
-## Computation Logic
-Sums up size in bytes of all repositories grouped by programming language. Calculates percentages dynamically for visual charts:
-\text{Percentage} = \frac{\text{Bytes of Language}}{\text{Total Bytes}} \times 100
+﻿# Metrics Parsing
+Converts individual repository bytes count into dynamic representation:
+\text{Kilobytes} = \frac{\text{Bytes}}{1024}
