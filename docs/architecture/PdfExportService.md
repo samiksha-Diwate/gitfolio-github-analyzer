@@ -1,2 +1,2 @@
-﻿# PDF Formatting
-Fonts configured to Helvetica. Added dynamic header displaying creation time and GitFolio branding.
+﻿# PDF Export Styling Configurations
+Sets page margins to 36pt. Binds Helvetica standard fonts to PDF tables.
