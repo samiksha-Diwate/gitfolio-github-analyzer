@@ -1,2 +1,2 @@
-﻿# Rate Limiting Strategies
-Applies local token bucket throttling in controllers to prevent IP spamming on GitHub analysis queries.
+﻿# Bucket4j Settings
+Configured local IP request limit tokens using Spring MVC interceptors.
