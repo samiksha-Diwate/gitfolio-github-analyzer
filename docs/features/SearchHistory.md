@@ -1,2 +1,2 @@
-﻿# Search History Paging
-Limits search history response payload to 20 elements per page with incremental scroll fetch support.
+﻿# Data Cleanup Job
+Scheduled task runs daily at midnight to purge records older than 30 days.
