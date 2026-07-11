@@ -1,2 +1,2 @@
-﻿# Data Cleanup Job
-Scheduled task runs daily at midnight to purge records older than 30 days.
+﻿# History Pagination
+Specifies size parameter: default 15 records per page.
