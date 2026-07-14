@@ -1,2 +1,2 @@
-﻿# Profile Cache config
-Integrates Spring cache abstraction to retain GitHub Profile analysis results for 1 hour.
+﻿# Cache Eviction Policies
+Configures automatic cache eviction when profile details get updated.
