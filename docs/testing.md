@@ -1,2 +1,2 @@
-﻿# Controller Unit Tests
-Uses MockMvc to verify profile favorites addition requires login redirect.
+﻿# H2 Datasource Configurations
+Activates database memory caching during integration test runs.
