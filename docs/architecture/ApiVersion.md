@@ -1,2 +1,2 @@
-﻿# Content Negotiation
-Configures support for header values: Accept: application/vnd.gitfolio.v1+json.
+﻿# API Path Layouts
+Directs API version structures to use path-based identifiers.
