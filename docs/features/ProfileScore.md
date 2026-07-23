@@ -1,5 +1,3 @@
-﻿# Profile Scoring Weights
-- Total Stars: 40%
-- Fork Counts: 20%
-- Active Language diversity: 20%
-- Follower Counts: 20%
+﻿# Score formulas
+Mathematical logic for profile rating calculations:
+\text{Score} = (40 \times \text{Stars}) + (20 \times \text{Forks})
