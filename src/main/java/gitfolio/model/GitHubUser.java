@@ -13,6 +13,8 @@ public class GitHubUser {
     private String location;
     private String company;
     private String blog;
+    private String email;
+    private String created_at;
 
     public GitHubUser() {
     }
@@ -96,4 +98,20 @@ public class GitHubUser {
     public void setBlog(String blog) {
         this.blog = blog;
     }
-}
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitFolio - Sign In</title>
+    <title>GitFolio - Create Account</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -15,7 +15,7 @@
             justify-content: center;
             min-height: 100vh;
         }
-        .login-container {
+        .signup-container {
             width: 340px;
             padding: 30px;
             background-color: #161b22;
@@ -62,7 +62,7 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
         }
-        .btn-login {
+        .btn-signup {
             width: 100%;
             padding: 10px;
             background-color: #238636;
@@ -75,33 +75,13 @@
             margin-top: 10px;
             box-sizing: border-box;
         }
-        .btn-login:hover {
+        .btn-signup:hover {
             background-color: #2ea043;
         }
         .error-message {
             background-color: rgba(248, 81, 73, 0.15);
             border: 1px solid rgba(248, 81, 73, 0.4);
             color: #ff7b72;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            text-align: left;
-        }
-        .success-message {
-            background-color: rgba(56, 139, 253, 0.15);
-            border: 1px solid rgba(56, 139, 253, 0.4);
-            color: #58a6ff;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            text-align: left;
-        }
-        .info-message {
-            background-color: rgba(56, 139, 253, 0.1);
-            border: 1px solid rgba(56, 139, 253, 0.2);
-            color: #79c0ff;
             padding: 10px;
             border-radius: 6px;
             margin-bottom: 15px;
@@ -120,62 +100,36 @@
         .footer-text a:hover {
             text-decoration: underline;
         }
-        .demo-credentials {
-            margin-top: 15px;
-            padding: 8px;
-            background-color: #21262d;
-            border: 1px dashed #30363d;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #8b949e;
-            text-align: left;
-        }
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="signup-container">
         <div class="logo">GitFolio</div>
-        <h2>Sign in to your account</h2>
+        <h2>Create your account</h2>
 
-        <!-- Error Messages -->
-        <div class="error-message" th:if="${param.error}">
-            Invalid username or password. Please try again.
-        </div>
+        <div class="error-message" th:if="${error}" th:text="${error}"></div>
 
-        <!-- Success Messages -->
-        <div class="success-message" th:if="${param.signup_success}">
-            Registration successful! You can now log in.
-        </div>
-
-        <!-- Logout Messages -->
-        <div class="info-message" th:if="${param.logout}">
-            You have been logged out successfully.
-        </div>
-
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/signup}" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required autocomplete="username">
             </div>
             
             <div class="form-group">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <label for="password">Password</label>
-                </div>
-                <input type="password" id="password" name="password" required autocomplete="current-password">
+                <label for="password">Password (min 6 chars)</label>
+                <input type="password" id="password" name="password" required autocomplete="new-password">
             </div>
 
-            <button type="submit" class="btn-login">Sign in</button>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
+            </div>
+
+            <button type="submit" class="btn-signup">Sign up</button>
         </form>
 
-        <div class="demo-credentials">
-            <strong>💡 Quick test user:</strong><br>
-            Username: <code>testuser</code><br>
-            Password: <code>test123</code>
-        </div>
-
         <p class="footer-text">
-            New to GitFolio? <a href="/signup">Create an account</a>
+            Already have an account? <a href="/login">Sign in</a>
         </p>
     </div>
 </body>

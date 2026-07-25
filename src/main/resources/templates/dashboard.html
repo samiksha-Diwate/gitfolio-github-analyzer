@@ -1,13 +1,290 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitFolio - Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom styling for Dark/Glass theme -->
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+        .sidebar {
+            background-color: #161b22;
+            min-height: 100vh;
+        }
+        .nav-link {
+            color: #c9d1d9;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            background-color: #21262d;
+            color: #58a6ff;
+        }
+        .card-custom {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .card-custom:hover {
+            transform: translateY(-3px);
+            border-color: #8b949e;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #58a6ff;
+        }
+        .text-blue {
+            color: #58a6ff;
+        }
+        .profile-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #30363d;
+        }
+        .search-bar {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: #f0f6fc;
+            border-radius: 8px 0 0 8px;
+        }
+        .search-bar:focus {
+            background-color: #0d1117;
+            border-color: #58a6ff;
+            color: #f0f6fc;
+            box-shadow: none;
+        }
+        .search-btn {
+            border-radius: 0 8px 8px 0;
+            background-color: #238636;
+            border-color: #238636;
+            color: white;
+            font-weight: 600;
+        }
+        .search-btn:hover {
+            background-color: #2ea043;
+            border-color: #2ea043;
+        }
+        .list-group-item-custom {
+            background-color: #161b22;
+            border: 1px solid #21262d;
+            color: #c9d1d9;
+            transition: background-color 0.2s ease;
+        }
+        .list-group-item-custom:hover {
+            background-color: #21262d;
+        }
+        .badge-fav {
+            background-color: rgba(242, 199, 68, 0.1);
+            color: #f2c744;
+            border: 1px solid rgba(242, 199, 68, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <h1>Login Successful 🎉</h1>
-    <p>Welcome to GitFolio Dashboard</p>
 
-    <h2>Welcome, <span th:text="${username}"></span> 🎉</h2>
-    
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Navigation -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <div class="d-flex align-items-center mb-4 px-2">
+                <i class="bi bi-github fs-3 me-2 text-blue"></i>
+                <span class="fs-4 fw-bold text-blue">GitFolio</span>
+            </div>
+            
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link active py-2 px-3 d-flex align-items-center" href="/dashboard">
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-2 px-3 d-flex align-items-center" href="/search">
+                        <i class="bi bi-search me-2"></i> Profile Search
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-2 px-3 d-flex align-items-center" href="/favorites">
+                        <i class="bi bi-star me-2"></i> Favorites
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-2 px-3 d-flex align-items-center" href="/history">
+                        <i class="bi bi-clock-history me-2"></i> Search History
+                    </a>
+                </li>
+            </ul>
+
+            <hr class="my-4 border-secondary">
+
+            <!-- Logged in User Profile Info & Logout -->
+            <div class="px-2">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-secondary rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                        <i class="bi bi-person-fill text-white fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="fw-bold small" th:text="${username}">testuser</div>
+                        <div class="text-muted small" style="font-size: 0.75rem;">Logged In</div>
+                    </div>
+                </div>
+                
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-danger btn-sm w-100 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-box-arrow-right me-1"></i> Log out
+                    </button>
+                </form>
+            </div>
+        </nav>
+
+        <!-- Main Dashboard View -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom border-secondary">
+                <h1 class="h2">Welcome back, <span th:text="${username}" class="text-blue">User</span>!</h1>
+                <div class="text-muted" th:text="${#dates.format(#dates.createNow(), 'EEEE, MMMM d, yyyy')}">Date</div>
+            </div>
+
+            <!-- Profile Search Bar -->
+            <div class="row mb-5">
+                <div class="col-md-8 col-lg-6 mx-auto text-center">
+                    <h3 class="mb-3">Search GitHub Profiles</h3>
+                    <form th:action="@{/search}" method="post" class="input-group shadow-sm">
+                        <input type="text" name="username" class="form-control search-bar" placeholder="Enter GitHub Username" required autocomplete="off">
+                        <button type="submit" class="btn search-btn">
+                            <i class="bi bi-search me-1"></i> Analyze
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Stats Overview Cards -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="card card-custom p-4 d-flex flex-row align-items-center justify-content-between">
+                        <div>
+                            <h5 class="card-title text-muted mb-1">Favorite Profiles</h5>
+                            <p class="stat-value mb-0" th:text="${favoritesCount}">0</p>
+                        </div>
+                        <div class="bg-warning-subtle rounded p-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background-color: rgba(242, 199, 68, 0.1) !important;">
+                            <i class="bi bi-star-fill text-warning fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-custom p-4 d-flex flex-row align-items-center justify-content-between">
+                        <div>
+                            <h5 class="card-title text-muted mb-1">Search Queries Logged</h5>
+                            <p class="stat-value mb-0 text-info" th:text="${historyCount}">0</p>
+                        </div>
+                        <div class="bg-info-subtle rounded p-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background-color: rgba(88, 166, 255, 0.1) !important;">
+                            <i class="bi bi-clock-history text-info fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tables / Summary lists -->
+            <div class="row g-4">
+                <!-- Recent Favorites -->
+                <div class="col-lg-6">
+                    <div class="card card-custom p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0 text-blue"><i class="bi bi-star me-2"></i>Recent Saved Favorites</h5>
+                            <a href="/favorites" class="btn btn-sm btn-link text-decoration-none">View All</a>
+                        </div>
+                        
+                        <div th:if="${#lists.isEmpty(favorites)}" class="py-4 text-center text-muted">
+                            <i class="bi bi-star-half fs-3 d-block mb-2"></i>
+                            No favorite profiles saved yet. Search a user to add them!
+                        </div>
+
+                        <div th:unless="${#lists.isEmpty(favorites)}" class="list-group list-group-flush">
+                            <div th:each="fav : ${favorites}" class="list-group-item list-group-item-custom d-flex justify-content-between align-items-center py-3 px-0 border-bottom border-secondary">
+                                <div class="d-flex align-items-center">
+                                    <img th:src="${fav.avatarUrl}" alt="avatar" class="profile-img me-3">
+                                    <div>
+                                        <h6 class="mb-0 fw-bold" th:text="${fav.name != null && !fav.name.isEmpty() ? fav.name : fav.githubUsername}">Name</h6>
+                                        <small class="text-muted">@<span th:text="${fav.githubUsername}">username</span></small>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a th:href="@{/search(username=${fav.githubUsername})}" class="btn btn-sm btn-outline-primary px-3">
+                                        Analyze
+                                    </a>
+                                    <form th:action="@{/favorites/remove}" method="post" style="display:inline;">
+                                        <input type="hidden" name="username" th:value="${fav.githubUsername}">
+                                        <input type="hidden" name="redirectUrl" value="/dashboard">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Search History -->
+                <div class="col-lg-6">
+                    <div class="card card-custom p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0 text-blue"><i class="bi bi-clock-history me-2"></i>Recent Search History</h5>
+                            <a href="/history" class="btn btn-sm btn-link text-decoration-none">View All</a>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(history)}" class="py-4 text-center text-muted">
+                            <i class="bi bi-clock fs-3 d-block mb-2"></i>
+                            No search history found. Try searching above!
+                        </div>
+
+                        <div th:unless="${#lists.isEmpty(history)}" class="list-group list-group-flush">
+                            <div th:each="hist : ${history}" class="list-group-item list-group-item-custom d-flex justify-content-between align-items-center py-3 px-0 border-bottom border-secondary">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-secondary rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-search text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fw-bold" th:text="${hist.githubUsername}">username</h6>
+                                        <small class="text-muted">Searched on <span th:text="${#temporals.format(hist.searchedAt.atZone('UTC'), 'yyyy-MM-dd HH:mm')}">time</span></small>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a th:href="@{/search(username=${hist.githubUsername})}" class="btn btn-sm btn-outline-primary px-3">
+                                        Revisit
+                                    </a>
+                                    <form th:action="@{/history/delete}" method="post" style="display:inline;">
+                                        <input type="hidden" name="username" th:value="${hist.githubUsername}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="pt-5 my-5 text-muted border-top border-secondary text-center">
+                GitFolio GitHub Analyzer &copy; 2026. Made with Spring Boot & Thymeleaf.
+            </footer>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap 5 Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
