@@ -1,2 +1,2 @@
-﻿# Deployment Config Profile
-Configure local profile or prod profile depending on deployment target.
+﻿# Production Deploy Variables
+Specifies key configuration properties for deployment containers.
