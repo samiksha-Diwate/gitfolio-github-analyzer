@@ -1,2 +1,2 @@
-﻿# API Versioning Guidelines
-Prefix all backend endpoints with /v1/ to handle client compatibility.
+﻿# Content Negotiation
+Configures support for header values: Accept: application/vnd.gitfolio.v1+json.
