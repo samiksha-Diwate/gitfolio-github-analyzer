@@ -1,2 +1,2 @@
-﻿# History Pagination
-Specifies size parameter: default 15 records per page.
+﻿# Cleanup Triggers
+Configure cleanup task to run at 2 AM every Sunday.
