@@ -1,2 +1,2 @@
-﻿# Chart Rendering Hooks
-Chart script tags instantiate charts by parsing serialized arrays passed in Model attributes.
+﻿# UI Cards Styling
+Added CSS outline configurations to metrics panels.
