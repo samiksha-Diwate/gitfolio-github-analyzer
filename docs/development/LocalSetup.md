@@ -1,2 +1,2 @@
-﻿# Local Database
-Local profile activates jdbc:h2:mem:testdb automatically for fast development.
+﻿# OAuth2 Setup
+Add Client ID and Client Secret in pplication.yml for authenticating calls.
