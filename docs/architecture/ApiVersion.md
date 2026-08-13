@@ -1,2 +1,2 @@
-﻿# API Path Layouts
-Directs API version structures to use path-based identifiers.
+﻿# Media Type Mappings
+Ensures endpoints map custom media headers correctly.
