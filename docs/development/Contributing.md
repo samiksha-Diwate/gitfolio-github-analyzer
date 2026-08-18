@@ -1,2 +1,2 @@
-﻿# Release Tagging Rules
-Use Semantic Versioning rules: [Major].[Minor].[Patch] (e.g. 1.0.2).
+﻿# Branch Merger Guidelines
+Main branch merges require successful integration tests and linear history.
